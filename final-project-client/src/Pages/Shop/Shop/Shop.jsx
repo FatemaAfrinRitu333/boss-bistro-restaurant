@@ -7,12 +7,19 @@ import { useState } from 'react';
 import useMenu from '../../../Hooks/useMenu';
 import FoodCart from '../../../Components/FoodCart/FoodCart';
 import ShopTab from '../ShopTab/ShopTab';
+import { useParams } from 'react-router-dom';
 // import { useMenu } from '../../../Hooks/useMenu';
 
 
 const Shop = () => {
+    const categories = ['salad', 'pizza', 'soup', 'dessert', 'drinks']
+    const { category } = useParams();
+
+    const initialIndex = categories.indexOf(category);
+    console.log(initialIndex, category);
 
     const [tabIndex, setTabIndex] = useState(0);
+
     const [menu] = useMenu();
     const desserts = menu.filter(dessert => dessert.category === 'dessert');
     const soups = menu.filter(soup => soup.category === 'soup');
@@ -24,7 +31,7 @@ const Shop = () => {
     return (
         <div>
             <Helmet>
-                <title>Bistro | Our Shop</title>
+                <title>{`Bistro | Our Shop - ${category}`}</title>
             </Helmet>
             {/* Main cover */}
             <Cover

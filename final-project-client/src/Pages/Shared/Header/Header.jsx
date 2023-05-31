@@ -5,11 +5,12 @@ import logo from '../../../assets/logo.png';
 const Header = () => {
 
     const list = <>
-        <li><Link to='/'>Home</Link></li>
-        <li><Link to='/contact'>Contact us</Link></li>
-        <li><Link to='/dashboard'>Dashboard</Link></li>
-        <li><Link to='/menu'>Our menu</Link></li>
-        <li><Link to='/shop'>our shop</Link></li>
+        <li><Link className='p-0' to='/'>Home</Link></li>
+        <li><Link className='p-0' to='/contact'>Contact us</Link></li>
+        <li><Link className='p-0' to='/dashboard'>Dashboard</Link></li>
+        <li><Link className='p-0' to='/menu'>Our menu</Link></li>
+        <li><Link className='p-0' to='/shop/salad'>our shop</Link></li>
+        <li><Link className='p-0' to='/login'>Login</Link></li>
     </>
 
     return (
@@ -29,13 +30,13 @@ const Header = () => {
                         <label tabIndex={0} className="btn btn-ghost lg:hidden">
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
                         </label>
-                        <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52 uppercase">
+                        <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 px-6 py-3 space-y-3 shadow bg-base-100 rounded-box w-max uppercase">
                             {list}
                         </ul>
                     </div>
                 </div>
                 <div className="hidden lg:flex">
-                    <ul className="menu menu-horizontal px-1">
+                    <ul className="menu menu-horizontal px-1 space-x-4">
                         {list}
                     </ul>
                 </div>
