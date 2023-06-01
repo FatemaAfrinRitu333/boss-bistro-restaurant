@@ -11,7 +11,7 @@ app.get('/', (req, res) => {
     res.send('Bistro Boss server is running')
 })
 
-
+// I am just checking
 
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const uri = `mongodb+srv://${process.env.USER_DB}:${process.env.PASS_DB}@cluster0.wqcwecn.mongodb.net/?retryWrites=true&w=majority`;
