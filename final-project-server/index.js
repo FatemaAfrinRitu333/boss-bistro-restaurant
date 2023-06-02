@@ -11,7 +11,7 @@ app.get('/', (req, res) => {
     res.send('Bistro Boss server is running')
 })
 
-// I am just checking
+
 
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const uri = `mongodb+srv://${process.env.USER_DB}:${process.env.PASS_DB}@cluster0.wqcwecn.mongodb.net/?retryWrites=true&w=majority`;
@@ -33,6 +33,7 @@ async function run() {
 
         const menuCollection = client.db('BistroBoss').collection('menu');
         const reviewCollection = client.db('BistroBoss').collection('review');
+        const cartCollection = client.db('BistroBoss').collection('carts');
 
 
         app.get('/menu', async(req, res)=>{
@@ -61,3 +62,10 @@ run().catch(console.dir);
 app.listen(port, () => {
     console.log(`Bistro Boss server connected on port: ${port}`);
 })
+
+/**
+ * 
+ *      NAMING CONVENTION
+ * users: userCollection
+ * app.get/post/put('/users') || app.get/put/patch/delete('/users/:id')
+*/
