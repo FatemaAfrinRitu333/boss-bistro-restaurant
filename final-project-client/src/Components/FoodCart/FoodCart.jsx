@@ -1,11 +1,46 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { AuthContext } from '../../Providers/AuthProvider';
+import Swal from 'sweetalert2';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const FoodCart = ({ item }) => {
-
-    const { name, recipe, image, price } = item;
+    const {user} = useContext(AuthContext);
+    const { name, recipe, image, price, _id } = item;
+    const navigate = useNavigate();
+    const location = useLocation();
 
     const handleAddToCart = (item) =>{
         console.log(item);
+        if(user){
+            const cartItem = {menuItemId: _id, name, price, image, email: user.email}
+            fetch('http://localhost:5000/carts',{
+                method: 'POST',
+                headers: {
+                    "content-type": "application/json"
+                },
+                body: JSON.stringify(cartItem)
+
+            })
+            .then(res=> res.json())
+            .then(data=>{
+                if(data.acknowledged){
+                    Swal.fire("Added!", "Your food is added to the cart", "success");
+                }
+            })
+        }
+        else{
+            Swal.fire({
+                icon: "warning",
+                title: "Invalid User",
+                text: `User not recognized. Please login/register first to add foods in your cart!`,
+                confirmButtonColor: 'primary',
+                confirmButtonText: 'Okay'
+              }).then((result)=>{
+                if(result.isConfirmed){
+                    navigate('/login', {state: {from: location}})
+                }
+              })
+        }
     }
 
     return (
