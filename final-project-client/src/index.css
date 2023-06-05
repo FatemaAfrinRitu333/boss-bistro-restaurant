@@ -3,5 +3,10 @@
 @tailwind utilities;
 
 body{
-    background-color: white;
+    background-color: #fff;
+}
+
+.drawer-side a.active{
+    color: #fff;
+    background-color: transparent;
 }

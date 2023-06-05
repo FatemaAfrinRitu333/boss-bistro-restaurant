@@ -3,9 +3,13 @@ import logo from "../../../assets/logo.png";
 import { useContext } from "react";
 import { AuthContext } from "../../../Providers/AuthProvider";
 import Swal from "sweetalert2";
+import useCart from "../../../Hooks/useCart";
 
 const Header = () => {
   const { user, LogOut } = useContext(AuthContext);
+  const [cart] = useCart();
+  // console.log(cart)
+  const total = cart.reduce((acc, item) => item.price + acc, 0);
 
   const handleLogOut = () => {
     LogOut()
@@ -85,7 +89,7 @@ const Header = () => {
             </label>
             <ul
               tabIndex={0}
-              className="menu menu-compact dropdown-content mt-3 px-6 py-3 space-y-3 shadow bg-base-100 rounded-box w-max uppercase"
+              className="menu menu-compact dropdown-content mt-3 px-6 py-3 space-y-3 shadow bg-neutral rounded-box w-max uppercase"
             >
               {list}
             </ul>
@@ -96,7 +100,7 @@ const Header = () => {
         </div>
         <div className="flex">
           <div className="dropdown dropdown-end">
-            <label tabIndex={0} className="btn btn-ghost btn-circle">
+          <label tabIndex={0} className="btn btn-ghost btn-circle">
               <div className="indicator">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -112,19 +116,19 @@ const Header = () => {
                     d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
                   />
                 </svg>
-                <span className="badge badge-sm indicator-item">8</span>
+                <span className="badge badge-sm indicator-item">{cart?.length || 0}</span>
               </div>
             </label>
             <div
               tabIndex={0}
-              className="mt-3 card card-compact dropdown-content w-max px-4 bg-base-100 shadow"
+              className="mt-3 card card-compact dropdown-content w-max px-4 bg-neutral shadow"
             >
               <div className="card-body">
-                <span className="font-bold text-lg">8 Items</span>
-                <span className="text-info">Subtotal: $999</span>
+                <span className="font-bold text-lg">{cart?.length || 0} Items</span>
+                <span className="text-white">Subtotal: ${total.toFixed(2)}</span>
                 <div className="card-actions">
-                  <Link to='/'>
-                    <button className="btn btn-primary btn-outline btn-block">
+                  <Link to='/dashboard/my-cart'>
+                    <button className="btn btn-neutral btn-outline btn-block">
                       View cart
                     </button>
                   </Link>

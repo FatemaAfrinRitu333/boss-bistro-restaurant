@@ -9,6 +9,9 @@ import ContactUs from "../Pages/ContactUs/ContactUs";
 import ErrorPage from "../Pages/404/ErrorPage";
 import Login from "../Pages/Login/Login";
 import Register from "../Pages/Register/Register";
+import Dashboard from "../Layout/Dashboard";
+import MyCart from "../Pages/Dashboard/MyCart/MyCart";
+import PrivateRoutes from "./PrivateRoutes";
 
 
 export const router = createBrowserRouter([
@@ -41,6 +44,16 @@ export const router = createBrowserRouter([
                 path: '/register',
                 element: <Register />
             },
+        ]
+    },
+    {
+        path: '/dashboard',
+        element: <PrivateRoutes><Dashboard /></PrivateRoutes>,
+        children: [
+            {
+                path: '/dashboard/my-cart',
+                element: <MyCart />
+            }
         ]
     },
 ]);

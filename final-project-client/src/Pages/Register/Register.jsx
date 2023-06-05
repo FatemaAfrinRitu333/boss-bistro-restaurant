@@ -23,12 +23,34 @@ const Register = () => {
     createUser(data.email, data.password)
       .then((result) => {
         const loggedUser = result.user;
-        console.log(loggedUser);
-        Swal.fire("Success!", "You are successfully registered!!", "success");
-        reset();
+        loggedUser.displayName = data.name;
+        loggedUser.photoURL = data.photo;
+
+        const saveUser = { name: data.name, email: data.email };
+
+        fetch(`http://localhost:5000/users`, {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(saveUser),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.insertedId) {
+              console.log(data);
+              Swal.fire(
+                "Success!",
+                "You are successfully registered!!",
+                "success"
+              );
+              navigate(from, { replace: true });
+              reset();
+            }
+          });
       })
       .catch((error) => {
-        console.log("Error: ", error.message);
+        console.log("Error: ", error);
         Swal.fire({
           icon: "error",
           title: "Oops...",
@@ -38,49 +60,30 @@ const Register = () => {
   };
   //   console.log(watch("example"));
 
-  const { createUser, GoogleSignIn, updateUserProfile } = useContext(AuthContext);
+  const { createUser, GoogleSignIn } = useContext(AuthContext);
 
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location?.state?.from?.pathname || '/';
-
-  const handleCreateUser = (e) => {
-    e.preventDefault();
-    const form = e.target;
-    const email = form.email.value;
-    const password = form.password.value;
-    console.log(email, password);
-
-    createUser(email, password)
-      .then((result) => {
-        const loggedUser = result.user;
-        console.log(loggedUser);
-        Swal.fire("Success!", "You are successfully registered!!", "success");
-        updateUserProfile(data.name, data.photoURL)
-        .then(()=>{
-          console.log('User profile updated')
-          reset();
-        })
-        .catch(error=>{console.log(error)})
-        navigate(from, {replace: true})
-      })
-      .catch((error) => {
-        console.log("Error: ", error.message);
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: `${error.message}`,
-        });
-      });
-  };
+  const from = location?.state?.from?.pathname || "/";
 
   const handleGoogleSignin = () => {
     GoogleSignIn()
       .then((result) => {
         const loggedUser = result.user;
         console.log(loggedUser);
-        Swal.fire("Success!", "You are successfully logged In!!", "success");
-        navigate(from, { replace: true });
+
+        const saveUser = { name: loggedUser.name, email: loggedUser.email };
+        fetch(`http://localhost:5000/users`, {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(saveUser),
+        })
+          .then((res) => res.json())
+          .then(() => {
+              navigate(from, { replace: true });
+          });
       })
       .catch((error) => {
         Swal.fire({

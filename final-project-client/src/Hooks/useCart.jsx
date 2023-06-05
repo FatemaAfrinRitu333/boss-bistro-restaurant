@@ -6,12 +6,12 @@ const useCart = () => {
   const { user } = useContext(AuthContext);
 
   const {
-    isLoading,
-    isError,
+    refetch,
+    // isError,
     data: cart = [],
-    error,
+    // error,
   } = useQuery({
-    queryKey: ["cart", user?.email],
+    queryKey: ["carts", user?.email],
     queryFn: async () => {
       const response = await fetch(
         `http://localhost:5000/carts?email=${user?.email}`
@@ -19,8 +19,13 @@ const useCart = () => {
       return response.json();
     },
   });
-
-  return [cart, isLoading];
+//   if (isLoading) {
+//     return <div className="w-full h-screen flex justify-center items-center"><span className="loading loading-dots loading-lg"></span></div>
+//   }
+//   if (isError) {
+//     return <div className="w-full h-screen flex justify-center items-center">Error: {error.message}</div>
+//   }
+  return [cart, refetch];
 };
 
 export default useCart;
