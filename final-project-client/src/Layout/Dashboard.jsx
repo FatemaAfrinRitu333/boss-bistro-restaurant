@@ -5,6 +5,10 @@ import {
   FaMoneyBill,
   FaCalendarAlt,
   FaHome,
+  FaUtensils,
+  FaBook,
+  FaUsers,
+  FaBars,
 } from "react-icons/fa";
 import { MdReviews } from "react-icons/md";
 import { AiOutlineBars } from "react-icons/ai";
@@ -13,8 +17,10 @@ import { BsFillBagCheckFill, BsFillCalendarCheckFill } from "react-icons/bs";
 import useCart from "../Hooks/useCart";
 
 const Dashboard = () => {
-
   const [cart] = useCart();
+
+  // TODO: load data from the server to have dynamic isAdmin based data
+  const isAdmin = true;
 
   return (
     <div className="drawer drawer-mobile">
@@ -54,39 +60,72 @@ const Dashboard = () => {
               restaurant
             </span>
           </p>
-          <li>
-            <NavLink to="/">
-              <FaHome /> User Home
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/dashboard/reservation">
-              <FaCalendarAlt /> Reservation
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/dashboard/payment-history">
-              <FaMoneyBill /> Payment History
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/dashboard/my-cart">
-              <FaShoppingCart /> My Cart
-              <span className="badge badge-sm badge-success indicator-item">
-                {cart?.length || 0}
-              </span>
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/dashboard/add-review">
-              <MdReviews /> Add review
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/dashboard/my-booking">
-              <BsFillCalendarCheckFill /> My booking
-            </NavLink>
-          </li>
+          {isAdmin ? (
+            <>
+              <li>
+                <NavLink to="/">
+                  <FaHome /> Admin Home
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/dashboard/add-item">
+                  <FaUtensils /> Add Items
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/dashboard/manage-items">
+                  <FaBars /> Manage Items
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/dashboard/manage-bookings">
+                  <FaBook /> Manage Bookings
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/dashboard/all-users">
+                  <FaUsers /> All Users
+                </NavLink>
+              </li>
+            </>
+          ) : (
+            <>
+              <li>
+                <NavLink to="/">
+                  <FaHome /> User Home
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/dashboard/reservation">
+                  <FaCalendarAlt /> Reservation
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/dashboard/payment-history">
+                  <FaMoneyBill /> Payment History
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/dashboard/my-cart">
+                  <FaShoppingCart /> My Cart
+                  <span className="badge badge-sm badge-success indicator-item">
+                    {cart?.length || 0}
+                  </span>
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/dashboard/add-review">
+                  <MdReviews /> Add review
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/dashboard/my-booking">
+                  <BsFillCalendarCheckFill /> My booking
+                </NavLink>
+              </li>
+            </>
+          )}
+
           <div className="divider"></div>
           <li>
             <NavLink to="/">
