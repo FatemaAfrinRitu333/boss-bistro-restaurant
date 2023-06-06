@@ -154,7 +154,7 @@ const Login = () => {
               </div>
               <div className="form-control mt-6">
                 <input
-                  disabled={disabled}
+                  // disabled={disabled}
                   type="submit"
                   value="LOGIN"
                   className="btn btn-accent"
