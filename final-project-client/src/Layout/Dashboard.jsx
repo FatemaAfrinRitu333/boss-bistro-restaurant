@@ -15,12 +15,14 @@ import { AiOutlineBars } from "react-icons/ai";
 import { IoIosMail } from "react-icons/io";
 import { BsFillBagCheckFill, BsFillCalendarCheckFill } from "react-icons/bs";
 import useCart from "../Hooks/useCart";
+import useAdmin from "../Hooks/useAdmin";
 
 const Dashboard = () => {
   const [cart] = useCart();
 
   // TODO: load data from the server to have dynamic isAdmin based data
-  const isAdmin = true;
+  // const isAdmin = true;
+  const [isAdmin] = useAdmin();
 
   return (
     <div className="drawer drawer-mobile">
@@ -51,7 +53,7 @@ const Dashboard = () => {
       </div>
       <div className="drawer-side">
         <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
-        <ul className="menu py-4 px-6 w-max bg-[#D1A054] text-base-content uppercase">
+        <ul className="menu py-4 px-6 w-max bg-[#D1A054] text-base-content uppercase min-h-screen">
           {/* Sidebar content here */}
           <p className="mt-5 mb-7">
             <span className="text-2xl font-bold py-0">Bistro Boss</span>
@@ -61,7 +63,7 @@ const Dashboard = () => {
             </span>
           </p>
           {isAdmin ? (
-            <>
+            <> 
               <li>
                 <NavLink to="/">
                   <FaHome /> Admin Home
