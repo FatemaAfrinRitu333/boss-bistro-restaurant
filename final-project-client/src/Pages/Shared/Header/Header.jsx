@@ -128,7 +128,7 @@ const Header = () => {
                 <span className="text-white">Subtotal: ${total.toFixed(2)}</span>
                 <div className="card-actions">
                   <Link to='/dashboard/my-cart'>
-                    <button className="btn btn-neutral btn-outline btn-block">
+                    <button className="btn btn-primary btn-outline btn-block">
                       View cart
                     </button>
                   </Link>

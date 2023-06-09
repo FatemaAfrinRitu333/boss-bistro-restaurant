@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
+const stripe = require('stripe')(process.env.PAYMENT_SECRET_KEY);
 const app = express();
 const port = process.env.PORT || 5000;
 
@@ -56,12 +57,12 @@ async function run() {
     const reviewCollection = client.db("BistroBoss").collection("review");
     const cartCollection = client.db("BistroBoss").collection("carts");
     const userCollection = client.db("BistroBoss").collection("users");
+    const paymentCollection = client.db("BistroBoss").collection("payments");
 
     // jwt
     app.post('/jwt', (req, res) => {
       const user = req.body;
       const token = jwt.sign(user, process.env.ACCESS_TOKEN_JWT, { expiresIn: '1h' })
-
       res.send({ token })
     })
 
@@ -156,18 +157,17 @@ async function run() {
 
     // CART COLLECTION APIs
 
-    app.get("/carts", verifyJWT, async (req, res) => {
+    app.get('/carts', async (req, res) => {
       const email = req.query.email;
-      if (!email) {
-        res.send([]);
-      }
 
-      const decodedEmail = req.decoded.email;
-      if (email !== decodedEmail) {
-        return res
-          .status(403)
-          .send({ error: true, message: "forbidden access" });
-      }
+      // if (!email) {
+      //   res.send([]);
+      // }
+
+      // const decodedEmail = req.decoded.email;
+      // if (email !== decodedEmail) {
+      //   return res.status(403).send({ error: true, message: 'forbidden access' })
+      // }
 
       const query = { email: email };
       const result = await cartCollection.find(query).toArray();
@@ -176,7 +176,7 @@ async function run() {
 
     app.post("/carts", async (req, res) => {
       const item = req.body;
-      // console.log(item);
+      console.log(item);
       const result = await cartCollection.insertOne(item);
       res.send(result);
     });
@@ -187,6 +187,27 @@ async function run() {
       const result = await cartCollection.deleteOne(query);
       res.send(result);
     });
+
+    // create payment intent
+    app.post('/create-payment-intent', async(req, res)=>{
+      const {price} = req.body;
+      const amount = price*100;
+      const paymentIntent = await stripe.paymentIntents.create({
+        amount: amount,
+        currency: 'usd',
+        payment_method_types: ['card']
+      });
+      res.send({
+        clientSecret: paymentIntent.client_secret
+      })
+    })
+
+    // payment api
+    app.post('/payments', async(req, res)=>{
+      const payment = req.body;
+      const result = await paymentCollection.insertOne(payment);
+      res.send(result);
+    })
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
