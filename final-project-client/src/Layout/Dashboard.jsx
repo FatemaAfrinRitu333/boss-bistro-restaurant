@@ -25,7 +25,7 @@ const Dashboard = () => {
   const [isAdmin] = useAdmin();
 
   return (
-    <div className="drawer drawer-mobile">
+    <div className="drawer drawer-mobile lg:drawer-open">
       <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content flex flex-col items-center">
         {/* Page content here */}
@@ -53,7 +53,7 @@ const Dashboard = () => {
       </div>
       <div className="drawer-side">
         <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
-        <ul className="menu py-4 px-6 w-max bg-[#D1A054] text-base-content uppercase min-h-screen">
+        <ul className="menu py-4 px-6 w-max bg-[#D1A054] text-base-content uppercase">
           {/* Sidebar content here */}
           <p className="mt-5 mb-7">
             <span className="text-2xl font-bold py-0">Bistro Boss</span>

@@ -3,6 +3,7 @@ import { Helmet } from "react-helmet-async";
 import useCart from "../../../Hooks/useCart";
 import { FaTrashAlt } from "react-icons/fa";
 import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
 
 const MyCart = () => {
   const [cart, refetch] = useCart();
@@ -20,16 +21,15 @@ const MyCart = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         fetch(`http://localhost:5000/carts/${id}`, {
-            method: 'DELETE'
+          method: "DELETE",
         })
-        .then(res=> res.json())
-        .then(data=>{
-            if(data.deletedCount>0){
-                refetch();
-                Swal.fire("Deleted!", "This item had been removed", "success");
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.deletedCount > 0) {
+              refetch();
+              Swal.fire("Deleted!", "This item had been removed", "success");
             }
-            
-        })
+          });
       }
     });
   };
@@ -42,7 +42,9 @@ const MyCart = () => {
       <div className="w-full flex justify-between items-center font-bold uppercase">
         <h2 className="text-xl">Total Orders: {cart.length}</h2>
         <h2 className="text-xl">Total price: ${total.toFixed(2)}</h2>
-        <button className="btn bg-[#D1A054] border-0 text-white">pay</button>
+        <Link to='/dashboard/payment'>
+          <button className="btn bg-[#D1A054] border-0 text-white">pay</button>
+        </Link>
       </div>
       <div className="overflow-x-auto my-7 w-full">
         <table className="table w-full">
