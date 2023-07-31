@@ -14,7 +14,7 @@ const FoodCart = ({ item }) => {
         console.log(item);
         if(user){
             const cartItem = {menuItemId: _id, name, price, image, email: user.email}
-            fetch('http://localhost:5000/carts',{
+            fetch('https://bistro-boss-server-ja6l.onrender.com/carts',{
                 method: 'POST',
                 headers: {
                     "content-type": "application/json"

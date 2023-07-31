@@ -28,7 +28,7 @@ const Register = () => {
 
         const saveUser = { name: data.name, email: data.email };
 
-        fetch(`http://localhost:5000/users`, {
+        fetch(`https://bistro-boss-server-ja6l.onrender.com/users`, {
           method: "POST",
           headers: {
             "content-type": "application/json",
@@ -73,7 +73,7 @@ const Register = () => {
         console.log(loggedUser);
 
         const saveUser = { name: loggedUser.name, email: loggedUser.email };
-        fetch(`http://localhost:5000/users`, {
+        fetch(`https://bistro-boss-server-ja6l.onrender.com/users`, {
           method: "POST",
           headers: {
             "content-type": "application/json",
